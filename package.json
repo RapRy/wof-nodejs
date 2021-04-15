@@ -1,0 +1,27 @@
+{
+  "name": "wof-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RapRy/wof-nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RapRy/wof-nodejs/issues"
+  },
+  "homepage": "https://github.com/RapRy/wof-nodejs#readme",
+  "dependencies": {
+    "autoprefixer": "^10.2.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.3",
+    "postcss": "^8.2.10",
+    "pug": "^3.0.2",
+    "tailwindcss": "^2.1.1"
+  }
+}
