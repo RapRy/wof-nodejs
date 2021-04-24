@@ -19,7 +19,9 @@ const contentSchema = new Schema({
     subCatName:String,
     description:String,
     thumbnail:String,
-    screenshots:Array
+    filename:String,
+    screenshots:Array,
+    preview:String
 })
 
 const Categories = model('category', catSchema)

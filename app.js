@@ -36,21 +36,21 @@ app.get('/', (req, res) => {
 
             let awaitContents = await contents
 
-            res.render('index', {title: result[0].catName, categories: result, subcategories: result[0], contents: awaitContents})
+            res.render('index', {title: result[0].catName, categories: result, subcategories: result[0], contents: awaitContents, activeCat: result[0].catName, activeSubCat: result[0].subCategories[0].subCatName})
         })
         .catch(err => console.log(err))
 })
 
-app.get('/:cat', (req, res, next) => {
+app.get('/:cat', (req, res) => {
     const cat = req.params.cat
 
     Categories.find({ catName: cat })
         .then(async result => {
+            console.log(result[0].subCategories)
 
             let categories = new Promise(resolve => {
                 Categories.find()
                 .then(async result2 => {
-
                     let contents = new Promise(resolve2 => {
                         Contents.find({ catName:cat, subCatName:result[0].subCategories[0].subCatName })
                             .then(result3 => {
@@ -68,7 +68,11 @@ app.get('/:cat', (req, res, next) => {
 
             let resRes = await categories
 
-            res.render('index', {title:result[0].catName, categories: resRes[0], subcategories: result[0], contents: resRes[1]})
+            let activeSubCat = "";
+
+            result.forEach((val, i) => (val.catName === cat) ? activeSubCat = val.subCategories[i].subCatName : activeSubCat = "")
+
+            res.render('index', {title:result[0].catName, categories: resRes[0], subcategories: result[0], contents: resRes[1], activeCat: cat, activeSubCat: activeSubCat})
         })
         .catch(err => console.log(err))
 })
@@ -101,7 +105,7 @@ app.get('/:cat/:subcat', (req, res) => {
 
             let resRes = await categories
             
-            res.render('index', {title:subcat, categories: resRes[0], subcategories: result[0], contents: resRes[1]})
+            res.render('index', {title:subcat, categories: resRes[0], subcategories: result[0], contents: resRes[1], activeCat: cat, activeSubCat: subcat})
 
         })
         .catch(err => console.log(err))
@@ -137,7 +141,7 @@ app.get('/preview/:cat/:subcat/:id', (req, res) => {
 
             let resRes = await categories
             
-            res.render('preview', {title:resRes[1].name, categories: resRes[0], subcategories: result[0], content: resRes[1]})
+            res.render('preview', {title:resRes[1].name, categories: resRes[0], subcategories: result[0], content: resRes[1], activeCat: cat, activeSubCat: subcat})
 
         })
         .catch(err => console.log(err))

@@ -6,17 +6,21 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
     title World of Fun | #{title}
     link(href="/styles/style.css", rel="stylesheet")
+
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript" defer)
+    script(src="./scripts/active.js" type="text/javascript" defer)
   body
     header.header
         img(src="/images/logo.png", alt="WoF")
     section.mainCategory
-        ul
+        ul(data-catactive=""+activeCat+"")
             each val in categories
-                li 
+                li
                     a(href="/"+val.catName+"") #{val.catName}
+            .catActive
 
     section.subCategory
-        ul 
+        ul(data-subcatactive=""+activeSubCat+"") 
             each val in subcategories.subCategories
                 li
                     a(href="/"+subcategories.catName+"/"+val.subCatName+"") #{val.subCatName}
@@ -27,7 +31,7 @@ html(lang="en")
                 .content 
                     .contentThumb 
                         a(href="/preview/"+val.catName+"/"+val.subCatName+"/"+val._id+"")
-                            img(src="https://via.placeholder.com/150", alt=""+val.name+"")
+                            img(src=""+val.thumbnail+"", alt=""+val.name+"")
                     .contentName 
                         p #{val.name}
                     .contentCta

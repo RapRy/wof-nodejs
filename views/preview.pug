@@ -6,17 +6,22 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0")
     title World of Fun | #{title}
     link(href="./styles/style.css", rel="stylesheet")
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css", rel="stylesheet")
+
+    script(src="https://code.jquery.com/jquery-3.6.0.min.js" type="text/javascript" defer)
+    script(src="./scripts/active.js" type="text/javascript" defer)
+    script(src="./scripts/preview.js" type="text/javascript" defer)
   body
     header.header
         img(src="/images/logo.png", alt="WoF")
     section.mainCategory
-        ul
+        ul(data-catactive=""+activeCat+"")
             each val in categories
                 li 
                     a(href="/"+val.catName+"") #{val.catName}
 
     section.subCategory
-        ul 
+        ul(data-subcatactive=""+activeSubCat+"")  
             each val in subcategories.subCategories
                 li
                     a(href="/"+subcategories.catName+"/"+val.subCatName+"") #{val.subCatName}
@@ -24,8 +29,33 @@ html(lang="en")
     main.mainContainer
         section.previewWrapper 
             .preview 
-                .prevThumb 
-                    img(src="https://via.placeholder.com/150", alt=""+content.name+"")
+                .prevThumb
+                    if content.catName === "Games" || content.catName === "Apps"
+                        img(src=""+content.thumbnail+"", alt=""+content.name+"")
+                    else if content.catName === "Music"
+                        //- audio file
+                        img(src=""+content.thumbnail+"", alt=""+content.name+"")
+                        .controls(data-control="audioFile") 
+                            audio#audioFile
+                                source(src="sample/"+content.preview+"."+content.filename+"", type="audio/mpeg")
+                            button(class="btn", id="play")
+                                i(class="fas fa-play")
+                            button(class="btn", id="stop")
+                                i(class="fas fa-stop")
+                            input(type="range", id="progress", class="progress", min="0", max="100", step="0.1", value="0")
+                            span(class="timestamp", id="timestamp") 00:00
+                    else if content.catName === "Videos"
+                        //- audio file
+                        video(preload="metadata", id="videoFile")
+                            source(src="sample/"+content.preview+"."+content.filename+"", type="video/mp4")
+                        .controls(data-control="videoFile") 
+                            button(class="btn", id="play")
+                                i(class="fas fa-play")
+                            button(class="btn", id="stop")
+                                i(class="fas fa-stop")
+                            input(type="range", id="progress", class="progress", min="0", max="100", step="0.1", value="0")
+                            span(class="timestamp", id="timestamp") 00:00
+
                 .prevNameCta 
                     .prevName 
                         h3 #{content.name}
@@ -33,5 +63,7 @@ html(lang="en")
                         a(href="#") Download
                 .prevDesc 
                     p #{content.description}
-                .prevScreenshots 
-                    //- for loop
+                if content.screenshots.length != 0
+                    .prevScreenshots 
+                        each screenshot in content.screenshots
+                            img(src=""+screenshot+"")
