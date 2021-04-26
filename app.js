@@ -47,7 +47,6 @@ app.get('/:cat', (req, res) => {
 
     Categories.find({ catName: cat })
         .then(async result => {
-            console.log(result[0].subCategories)
 
             let categories = new Promise(resolve => {
                 Categories.find()
