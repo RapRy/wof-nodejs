@@ -6,6 +6,7 @@ const { nextTick } = require('process')
 
 
 const app = express()
+const port = process.env.PORT || 3000
 
 const dbURI = "mongodb://testUser:test123@cluster0-shard-00-00.vu7xx.mongodb.net:27017,cluster0-shard-00-01.vu7xx.mongodb.net:27017,cluster0-shard-00-02.vu7xx.mongodb.net:27017/portalDB?ssl=true&replicaSet=atlas-5qniev-shard-0&authSource=admin&retryWrites=true&w=majority"
 
@@ -147,4 +148,4 @@ app.get('/preview/:cat/:subcat/:id', (req, res) => {
         .catch(err => console.log(err))
 })
 
-app.listen(3000, () => console.log('Server Started'))
+app.listen(port, () => console.log('Server Started'))
