@@ -18,6 +18,7 @@
   "homepage": "https://github.com/RapRy/wof-nodejs#readme",
   "dependencies": {
     "autoprefixer": "^10.2.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.12.3",
     "postcss": "^8.2.10",
